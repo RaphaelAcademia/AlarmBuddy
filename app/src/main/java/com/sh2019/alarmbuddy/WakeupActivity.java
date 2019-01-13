@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
+import android.icu.util.Calendar;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,6 +15,7 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Handler;
 import android.speech.tts.TextToSpeech;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -47,6 +50,7 @@ public class WakeupActivity extends AppCompatActivity implements TextToSpeech.On
     private double correctTemp;
     private EditText answerBox;
     private Button submitButton;
+    private TextView answerText;
     private int incorrectCount = 0;
 
     private int currentApiVersion;
@@ -61,6 +65,23 @@ public class WakeupActivity extends AppCompatActivity implements TextToSpeech.On
 
         submitButton = (Button) findViewById(R.id.submitButton);
         answerBox = (EditText) findViewById(R.id.answerText);
+        answerText = (TextView) findViewById(R.id.tempText);
+
+        ConstraintLayout constraintLayout = (ConstraintLayout) findViewById(R.id.mainLayout);
+
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+
+        if (hour >= 6 && hour < 12){
+            constraintLayout.setBackgroundResource(R.drawable.morning);
+        }else if (hour >= 12 && hour < 17){
+            constraintLayout.setBackgroundResource(R.drawable.afternoon);
+        }else if (hour >= 17 && hour < 24){
+            constraintLayout.setBackgroundResource(R.drawable.evening);
+        }else if (hour >= 0 && hour < 6){
+            constraintLayout.setBackgroundResource(R.drawable.evening);
+        }
+
 
         submitButton.setVisibility(INVISIBLE);
 
@@ -330,10 +351,14 @@ public class WakeupActivity extends AppCompatActivity implements TextToSpeech.On
                             }else{
                                 answerBox.setText("");
                                 incorrectCount++;
+
                                 if (incorrectCount < 5){
+
                                     Toast.makeText(context, "Incorrect answer!", Toast.LENGTH_SHORT).show();
+
                                 }else{
-                                    Toast.makeText(context, "The temperature is " + correctTemp + " celsius.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "Incorrect answer!", Toast.LENGTH_SHORT).show();
+                                    answerText.setText("The temperature is " + correctTemp + " celsius.");
                                 }
                             }
                         }catch(NumberFormatException e){

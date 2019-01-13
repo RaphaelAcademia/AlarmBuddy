@@ -230,10 +230,10 @@ public class MainABActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (input.getText().length() <= 100){
+                        if (input.getText().length() <= 50){
                             setReminder(input.getText().toString(), true);
                         }else{
-                            Toast.makeText(context, "Sorry, only up to 100 characters.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Sorry, only up to 50 characters.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

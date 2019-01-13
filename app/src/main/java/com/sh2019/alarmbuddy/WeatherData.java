@@ -8,6 +8,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.*;
 
+/**
+ * This utility was made by Raphael Academia.
+ */
 public class WeatherData {
 
     public static JSONObject getJSON (double latitudeLocation, double longitudeLocation) throws IOException {   //Returns appropriate weather data given the location

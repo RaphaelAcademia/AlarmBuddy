@@ -7,6 +7,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+/**
+ * Majority of the lines and speech structure was made by Keefe Ho:
+ * https://github.com/kenken182
+ */
 public class SpeechBuilder {
 
     private double longitude, latitude;
